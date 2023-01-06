@@ -1,9 +1,10 @@
 require('dotenv').config();
 import { Logger } from '@nestjs/common';
 
-export const APP_PORT               : string = process.env.BLR_APP_PORT;
-export const ENVIRONMENT            : string = process.env.BLR_ENVIRONMENT;
-export const DB_URL                 : string = process.env.BLR_DB_URL;
+export const APP_PORT               : string = process.env.APP_PORT;
+export const ENVIRONMENT            : string = process.env.ENVIRONMENT;
+export const DB_URL                 : string = process.env.DB_URL;
+export const SECRET                 : string = process.env.SECRET;
 
 export async function validate(){
     const logger = new Logger(); 
