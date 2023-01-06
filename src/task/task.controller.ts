@@ -14,7 +14,7 @@ import {
 import { Task } from '../model/task.schema';
 import { TaskService } from './task.service';
 
-@Controller('/api/v1')
+@Controller('/api/v1/task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
