@@ -31,4 +31,8 @@ export class TaskService {
     }
     return this.taskModel.find().populate('createdBy').exec();
   }
+
+  async updateTask(id, task: Task): Promise<Task> {
+    return await this.taskModel.findByIdAndUpdate(id, task, { new: true });
+  }
 }
