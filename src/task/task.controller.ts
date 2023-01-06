@@ -30,4 +30,10 @@ export class TaskController {
   async read(@Query() id): Promise<Object> {
     return await this.taskService.readTask(id);
   }
+
+  @Put('/:id')
+  async update(@Res() response, @Param('id') id, @Body() task: Task) {
+    const updatedTask = await this.taskService.updateTask(id, task);
+    return response.status(HttpStatus.OK).json(updatedTask);
+  }
 }
