@@ -21,4 +21,14 @@ export class TaskService {
     const newTask = new this.taskModel(requestBody);
     return newTask.save();
   }
+
+  async readTask(id): Promise<any> {
+    if (id.id) {
+      return this.taskModel
+        .findOne({ _id: id.id })
+        .populate('createdBy')
+        .exec();
+    }
+    return this.taskModel.find().populate('createdBy').exec();
+  }
 }
