@@ -1,7 +1,7 @@
 import { ConsoleLogger } from '@nestjs/common';
 import Winston, { format, transports, createLogger } from 'winston';
 import * as moment from 'moment-timezone';
-import * as secrets from '../../config/environment';
+import * as secrets from '../../config/enviroment';
 
 export class LoggerWinston extends ConsoleLogger {
   logger: Winston.Logger;
