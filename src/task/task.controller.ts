@@ -36,4 +36,12 @@ export class TaskController {
     const updatedTask = await this.taskService.updateTask(id, task);
     return response.status(HttpStatus.OK).json(updatedTask);
   }
+
+  @Delete('/:id')
+  async delete(@Res() response, @Param('id') id) {
+    await this.taskService.deleteTask(id);
+    return response.status(HttpStatus.OK).json({
+      user: null,
+    });
+  }
 }
