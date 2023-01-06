@@ -28,4 +28,10 @@ export class UserController {
       newUSer,
     });
   }
+
+  @Post('/signin')
+  async SignIn(@Res() response, @Body() user: User) {
+    const token = await this.userService.signin(user, this.jwtService);
+    return response.status(HttpStatus.OK).json(token);
+  }
 }
