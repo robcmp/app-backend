@@ -25,4 +25,9 @@ export class TaskController {
       newTask,
     });
   }
+
+  @Get()
+  async read(@Query() id): Promise<Object> {
+    return await this.taskService.readTask(id);
+  }
 }
