@@ -35,4 +35,8 @@ export class TaskService {
   async updateTask(id, task: Task): Promise<Task> {
     return await this.taskModel.findByIdAndUpdate(id, task, { new: true });
   }
+
+  async deleteTask(id): Promise<any> {
+    return await this.taskModel.findByIdAndRemove(id);
+  }
 }
