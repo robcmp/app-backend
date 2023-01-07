@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../model/user.schema';
 import { Model } from 'mongoose';
@@ -7,9 +7,9 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel('User') private userModel: Model<UserDocument>,
-  ) {}
+  logger = new Logger(UserService.name);
+
+  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
   async signup(user: User): Promise<User> {
     const salt = await bcrypt.genSalt();
@@ -25,29 +25,40 @@ export class UserService {
   }
 
   async signin(user: User, jwt: JwtService): Promise<any> {
-    const foundUser = await this.userModel
-      .findOne({ email: user.email })
-      .exec();
-    if (foundUser) {
-      const { password } = foundUser;
-      if (bcrypt.compare(user.password, password)) {
-        const payload = { email: user.email };
-        return {
-          token: jwt.sign(payload),
-        };
+    try {
+      const foundUser = await this.userModel
+        .findOne({ email: user.email })
+        .exec();
+      if (foundUser) {
+        const { password } = foundUser;
+        if (bcrypt.compare(user.password, password)) {
+          const payload = { email: user.email };
+          return {
+            token: jwt.sign(payload),
+            id: foundUser._id,
+          };
+        }
+        return new HttpException(
+          'Incorrect username or password',
+          HttpStatus.UNAUTHORIZED,
+        );
+      } else {
+        this.logger.error('Error - Incorrect username or password');
+        return { token: '' };
       }
-      return new HttpException(
-        'Incorrect username or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+    } catch (err) {
+      this.logger.error('Error - sign in User', err);
+      throw err;
     }
-    return new HttpException(
-      'Incorrect username or password',
-      HttpStatus.UNAUTHORIZED,
-    );
   }
 
   async getOne(email): Promise<User> {
     return await this.userModel.findOne({ email }).exec();
+  }
+
+  async getUserById(id): Promise<User> {
+    return await this.userModel
+      .findOne({ _id: id }, { firstname: 1, lastname: 1 })
+      .exec();
   }
 }
