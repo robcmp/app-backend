@@ -20,7 +20,7 @@ import * as secrets from './config/enviroment';
     MongooseModule.forFeature([{ name: 'Task', schema: TaskSchema }]),
     JwtModule.register({
       secret,
-      signOptions: { expiresIn: '2h' },
+      signOptions: { expiresIn: '30m' },
     }),
   ],
   controllers: [AppController, UserController, TaskController],
