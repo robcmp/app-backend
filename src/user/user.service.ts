@@ -57,8 +57,13 @@ export class UserService {
   }
 
   async getUserById(id): Promise<User> {
-    return await this.userModel
-      .findOne({ _id: id }, { firstname: 1, lastname: 1 })
-      .exec();
+    try {
+      return await this.userModel
+        .findOne({ _id: id }, { firstname: 1, lastname: 1 })
+        .exec();
+    } catch (err) {
+      this.logger.error('Error - obtaining user info', err);
+      throw err;
+    }
   }
 }
