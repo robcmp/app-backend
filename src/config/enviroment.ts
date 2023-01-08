@@ -1,7 +1,7 @@
 require('dotenv').config();
 import { Logger } from '@nestjs/common';
 
-export const APP_PORT               : string = process.env.APP_PORT;
+export const PORT                   : string = process.env.PORT;
 export const ENVIRONMENT            : string = process.env.ENVIRONMENT;
 export const DB_URL                 : string = process.env.DB_URL;
 export const SECRET                 : string = process.env.SECRET;
