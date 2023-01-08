@@ -37,17 +37,16 @@ export class UserService {
         .exec();
       if (foundUser) {
         const { password } = foundUser;
-        if (bcrypt.compare(user.password, password)) {
-          const payload = { email: user.email };
+        const passMatching = await bcrypt.compare(user.password, password);
+        console.log('passMAtch', passMatching);
+        if (passMatching) {
+          const payload = { email: user.email, password: user.password };
           return {
             token: jwt.sign(payload),
             id: foundUser._id,
           };
         }
-        return new HttpException(
-          'Incorrect username or password',
-          HttpStatus.UNAUTHORIZED,
-        );
+        return { token: '' };
       } else {
         this.logger.error('Error - Incorrect username or password');
         return { token: '' };
