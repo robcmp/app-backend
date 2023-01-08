@@ -1,5 +1,6 @@
 import {
   Injectable,
+  Logger,
   NotFoundException,
   ServiceUnavailableException,
 } from '@nestjs/common';
@@ -10,6 +11,7 @@ import { Request, Response } from 'express';
 
 @Injectable()
 export class TaskService {
+  logger = new Logger(TaskService.name);
   constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
   async createTask(task: Task): Promise<Task> {
@@ -18,7 +20,7 @@ export class TaskService {
       title: task.title,
       description: task.description,
     };
-    const newTask = new this.taskModel(requestBody);
+    const newTask = new this.taskModel(task);
     return newTask.save();
   }
 
@@ -32,11 +34,15 @@ export class TaskService {
     return this.taskModel.find().populate('createdBy').exec();
   }
 
+  async readTaskByUserId(userId): Promise<any> {
+    return this.taskModel.find({ createdBy: userId }).exec();
+  }
+
   async updateTask(id, task: Task): Promise<Task> {
     return await this.taskModel.findByIdAndUpdate(id, task, { new: true });
   }
 
-  async deleteTask(id): Promise<any> {
-    return await this.taskModel.findByIdAndRemove(id);
+  async deleteTask(idTask): Promise<any> {
+    return await this.taskModel.findByIdAndRemove(idTask);
   }
 }
