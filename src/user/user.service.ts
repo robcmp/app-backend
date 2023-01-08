@@ -11,20 +11,26 @@ export class UserService {
 
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
-  async signup(user: User): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(user.password, salt);
-    const reqBody = {
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      password: hash,
-    };
-    const newUser = new this.userModel(reqBody);
-    return newUser.save();
+  async signUp(user: User): Promise<User> {
+    try {
+      const salt = await bcrypt.genSalt();
+      const hash = await bcrypt.hash(user.password, salt);
+      const reqBody = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        password: hash,
+      };
+      const newUser = new this.userModel(reqBody);
+      const saveUser = await newUser.save();
+      return saveUser;
+    } catch (error) {
+      this.logger.error('Error - sign up User', error);
+      throw error;
+    }
   }
 
-  async signin(user: User, jwt: JwtService): Promise<any> {
+  async signIn(user: User, jwt: JwtService): Promise<any> {
     try {
       const foundUser = await this.userModel
         .findOne({ email: user.email })
