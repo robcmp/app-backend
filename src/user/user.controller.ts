@@ -25,15 +25,15 @@ export class UserController {
   ) {}
 
   @Post('/signup')
-  async Signup(@Res() response, @Body() user: User) {
-    const newUSer = await this.userService.signup(user);
-    return response.status(HttpStatus.CREATED).json({
-      newUSer,
-    });
+  async signUp(@Res() response, @Body() user: User) {
+    this.logger.log('Creando usuario..');
+    const newUser = await this.userService.signup(user);
+    this.logger.log('Usuario creado exitosamente..');
+    return response.status(HttpStatus.CREATED).json({ newUser });
   }
 
   @Post('/signin')
-  async SignIn(@Res() response, @Body() user: User) {
+  async signIn(@Res() response, @Body() user: User) {
     this.logger.log('Realizando logeo de usuario...');
     const token = await this.userService.signin(user, this.jwtService);
 
@@ -51,12 +51,12 @@ export class UserController {
   }
 
   @Get('/user/:id')
-  async readTaskById(
+  async getdTaskByUserId(
     @Res() response,
     @Param('id', ParseObjectIdPipe) id,
   ): Promise<Object> {
+    this.logger.log(`Obteniendo tarea por id de usuario: ${id}`);
     const userById = await this.userService.getUserById(id);
-
     if (userById === null) {
       let error = `User not found`;
 
@@ -66,6 +66,7 @@ export class UserController {
         errors: [error],
       });
     }
+    this.logger.log(`Tareas de usuario: [${id}] obtenida(s) exitosamente`);
     return response.status(HttpStatus.OK).json(userById);
   }
 }
