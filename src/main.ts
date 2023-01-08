@@ -19,7 +19,7 @@ async function bootstrap() {
   }
   logger.log('Validaciones de secretos realizadas exitosamente');
   app.enableCors();
-  await app.listen(4000);
-  logger.log(`Servidor escuchando sobre el puerto  [${4000}]`);
+  await app.listen(process.env.APP_PORT);
+  logger.log(`Servidor escuchando sobre el puerto  [${process.env.APP_PORT}]`);
 }
 bootstrap();
