@@ -28,6 +28,15 @@ export class UserController {
   async signUp(@Res() response, @Body() user: User) {
     this.logger.log('Creando usuario..');
     const newUser = await this.userService.signUp(user);
+    if ('keyValue' in newUser) {
+      let error = 'Mail is already taken';
+
+      return response.status(204).send({
+        statusCode: '204',
+        message: 'El correo ya fue usado',
+        errors: [error],
+      });
+    }
     this.logger.log('Usuario creado exitosamente..');
     return response.status(HttpStatus.CREATED).json({ newUser });
   }
