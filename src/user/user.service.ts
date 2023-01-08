@@ -26,7 +26,7 @@ export class UserService {
       return saveUser;
     } catch (error) {
       this.logger.error('Error - sign up User', error);
-      throw error;
+      return error;
     }
   }
 
