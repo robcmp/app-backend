@@ -27,7 +27,7 @@ export class UserController {
   @Post('/signup')
   async signUp(@Res() response, @Body() user: User) {
     this.logger.log('Creando usuario..');
-    const newUser = await this.userService.signup(user);
+    const newUser = await this.userService.signUp(user);
     this.logger.log('Usuario creado exitosamente..');
     return response.status(HttpStatus.CREATED).json({ newUser });
   }
@@ -35,7 +35,7 @@ export class UserController {
   @Post('/signin')
   async signIn(@Res() response, @Body() user: User) {
     this.logger.log('Realizando logeo de usuario...');
-    const token = await this.userService.signin(user, this.jwtService);
+    const token = await this.userService.signIn(user, this.jwtService);
 
     if (token.token === '') {
       let error = `Incorrect user or password`;
