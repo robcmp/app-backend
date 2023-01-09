@@ -72,13 +72,13 @@ Dirección: (https://app-backend-production-f9a8.up.railway.app/)
 
 Los endpoints disponibles son:
 
-- GET ## `api/v1/task/:id`: Devuelve una tarea previamente creada a traves de su ObjectId
-- POST ## `api/v1/task`: Crea una tarea para un usuario previamente autenticado en la aplicación
-- PUT ## `api/v1/task/:id`: Actualiza una tarea previamente creada a traves de su ObjectId
-- DELETE ## `api/v1/task/:id`: Elimina una tarea previamente creada a traves de su ObjectId
-- GET ## `api/v1/user/:id`: Devuelve la o las tareas de un usuario por su ObjectId
-- POST ## `api/v1/signin`: Realiza la autenticación de un usuario para permitir su acceso a la aplicación devolviendo token de JWT y el ObjectId del usuario
-- POST ## `api/v1/signup`: Realiza el registro de un usuario dentro de la aplicacion con el siguiente Body
+- GET `/api/v1/task/:id`: Devuelve una tarea previamente creada a traves de su ObjectId
+- POST `/api/v1/task`: Crea una tarea para un usuario previamente autenticado en la aplicación
+- PUT `/api/v1/task/:id`: Actualiza una tarea previamente creada a traves de su ObjectId
+- DELETE `/api/v1/task/:id`: Elimina una tarea previamente creada a traves de su ObjectId
+- GET `/api/v1/user/:id`: Devuelve la o las tareas de un usuario por su ObjectId
+- POST `/api/v1/signin`: Realiza la autenticación de un usuario para permitir su acceso a la aplicación devolviendo token de JWT y el ObjectId del usuario
+- POST `/api/v1/signup`: Realiza el registro de un usuario dentro de la aplicacion con el siguiente Body
 ```json
   {
 	"firstname": "Nombre",
