@@ -60,7 +60,7 @@ export class UserController {
   }
 
   @Get('/user/:id')
-  async getdTaskByUserId(
+  async getTaskByUserId(
     @Res() response,
     @Param('id', ParseObjectIdPipe) id,
   ): Promise<Object> {
