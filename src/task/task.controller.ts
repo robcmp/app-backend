@@ -26,20 +26,14 @@ export class TaskController {
   async createTask(@Res() response, @Body() task: Task) {
     this.logger.log('Creando tarea de usuario');
     const newTask = await this.taskService.createTask(task);
-    console.log('newTask', newTask);
     this.logger.log('Tarea de usuario creada exitosamente...');
     return response.status(HttpStatus.CREATED).json({
       newTask,
     });
   }
 
-  @Get('')
-  async read(@Query() id): Promise<Object> {
-    return await this.taskService.readTask(id);
-  }
-
   @Get('/:id')
-  async readTaskById(
+  async getTaskById(
     @Res() response,
     @Param('id', ParseObjectIdPipe) id,
   ): Promise<Object> {
@@ -49,9 +43,9 @@ export class TaskController {
       this.logger.error('Error al obtener tareas de usuario');
       let error = `No task founds for user`;
 
-      return response.status(404).send({
-        statusCode: '404',
-        message: 'No se han encontrado tareas',
+      return response.status(204).send({
+        statusCode: '204',
+        message: 'Se han encontrado errores al obtener infomacion',
         errors: [error],
       });
     }
@@ -60,13 +54,19 @@ export class TaskController {
   }
 
   @Put('/:id')
-  async update(@Res() response, @Param('id') id, @Body() task: Task) {
+  async updateByTaskId(
+    @Res() response,
+    @Param('id', ParseObjectIdPipe) id,
+    @Body() task: Task,
+  ) {
+    this.logger.log('Modificando tarea...');
     const updatedTask = await this.taskService.updateTask(id, task);
+    this.logger.log('Tarea modificada exitosamente...');
     return response.status(HttpStatus.OK).json(updatedTask);
   }
 
   @Delete('/:id')
-  async delete(@Res() response, @Param('id', ParseObjectIdPipe) id) {
+  async deleteByTaskId(@Res() response, @Param('id', ParseObjectIdPipe) id) {
     this.logger.log('Eliminando tarea de usuario');
     const deletedTask = await this.taskService.deleteTask(id);
     if (deletedTask === null) {

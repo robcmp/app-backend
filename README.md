@@ -24,15 +24,19 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API creada en NestJS usando TypeScript y MongoDB como base de datos y para la autenticacion JWT con duracion de token ## `30m`.
 
-## Installation
+## Instalación
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## NOTA: Antes de ejecutar en local
+
+Renombrar archivo de variables de ambiente/entorno ## `.env.example` a ## `.env` y seguir los pasos. De no hacer esto la app no se podra ejecutar.
+
+## Ejecutando la app
 
 ```bash
 # development
@@ -62,13 +66,26 @@ $ npm run test:cov
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## API
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Dirección: (https://app-backend-production-f9a8.up.railway.app/)
 
-## License
+Los endpoints disponibles son:
 
-Nest is [MIT licensed](LICENSE) .
+- GET `/api/v1/task/:id`: Devuelve una tarea previamente creada a traves de su ObjectId
+- POST `/api/v1/task`: Crea una tarea para un usuario previamente autenticado en la aplicación
+- PUT `/api/v1/task/:id`: Actualiza una tarea previamente creada a traves de su ObjectId
+- DELETE `/api/v1/task/:id`: Elimina una tarea previamente creada a traves de su ObjectId
+- GET `/api/v1/user/:id`: Devuelve la o las tareas de un usuario por su ObjectId
+- POST `/api/v1/signin`: Realiza la autenticación de un usuario para permitir su acceso a la aplicación devolviendo token de JWT y el ObjectId del usuario
+- POST `/api/v1/signup`: Realiza el registro de un usuario dentro de la aplicacion con el siguiente Body
+```json
+  {
+	"firstname": "Nombre",
+	"lastname": "Apellido",
+	"email": "email@email.com",
+	"password": "12345"
+  }
+```
+
 
